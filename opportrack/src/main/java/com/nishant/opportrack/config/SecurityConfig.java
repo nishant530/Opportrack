@@ -16,7 +16,7 @@ private JwtAuthFilter jwtAuthFilter;
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/register", "/api/users/login", "/api/companies/**", "/api/test-feed" ).permitAll()
+                .requestMatchers("/api/users/register", "/api/users/login", "/api/companies/**", "/api/test-feed" , "/api/test-adzuna", "/api/test-email").permitAll()
                 .anyRequest().authenticated()
             );
             http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
