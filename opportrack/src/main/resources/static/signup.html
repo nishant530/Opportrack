@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpporTrack - Sign Up</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 300px; }
+        h2 { text-align: center; color: #333; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #45a049; }
+        #message { text-align: center; margin-top: 10px; color: red; }
+        a { display: block; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Sign Up</h2>
+        <input type="text" id="name" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="signup()">Sign Up</button>
+        <p id="message"></p>
+        <a href="login.html">Already have an account? Login</a>
+    </div>
+
+    <script>
+        async function signup() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/users/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                if (response.ok) {
+                    document.getElementById('message').style.color = 'green';
+                    document.getElementById('message').innerText = 'Signup successful! Redirecting to login...';
+                    setTimeout(() => window.location.href = 'login.html', 1500);
+                } else {
+                    document.getElementById('message').innerText = 'Signup failed. Try again.';
+                }
+            } catch (error) {
+                document.getElementById('message').innerText = 'Error connecting to server.';
+            }
+        }
+    </script>
+</body>
+</html>
