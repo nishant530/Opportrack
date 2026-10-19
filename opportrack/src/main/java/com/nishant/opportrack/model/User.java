@@ -1,13 +1,15 @@
 package com.nishant.opportrack.model;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
 import java.util.HashSet;
 import java.util.Set;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,7 +23,8 @@ public class User {
     // ... baaki sab same rahega
 
     private String name;
-    private String email;
+    @Column(unique = true)
+private String email;
     private String password;
 @ManyToMany
 @JoinTable(

@@ -1,5 +1,5 @@
 package com.nishant.opportrack.service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.nishant.opportrack.model.Company;
 import com.nishant.opportrack.model.OpportunityItem;
 import com.nishant.opportrack.model.User;
@@ -24,6 +24,7 @@ public class MatchingService {
 
     // Har 6 ghante mein chalega (milliseconds mein: 6 * 60 * 60 * 1000)
     @Scheduled(fixedRate = 21600000)
+    @Transactional
     public void checkAndNotify() {
         List<User> allUsers = userRepository.findAll();
 
