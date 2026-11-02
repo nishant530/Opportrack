@@ -3,7 +3,7 @@ package com.nishant.opportrack.model;
 public class OpportunityItem {
     private String title;
     private String link;
-    private String source; // jaise "Devpost", "Unstop"
+    private String source; // jaise "Devpost", "Unstop", company ka naam
 
     public OpportunityItem(String title, String link, String source) {
         this.title = title;

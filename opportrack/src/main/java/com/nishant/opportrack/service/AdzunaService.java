@@ -19,18 +19,26 @@ public class AdzunaService {
         List<OpportunityItem> items = new ArrayList<>();
         try {
             String url = "https://api.adzuna.com/v1/api/jobs/in/search/1"
-        + "?app_id=" + APP_ID
-        + "&app_key=" + APP_KEY
-       + "&what=intern"
-+ "&results_per_page=20";
+                    + "?app_id=" + APP_ID
+                    + "&app_key=" + APP_KEY
+                    + "&what=intern"
+                    + "&results_per_page=100";
 
             RestTemplate restTemplate = new RestTemplate();
             AdzunaResponse response = restTemplate.getForObject(url, AdzunaResponse.class);
-System.out.println("DEBUG: Response is " + (response == null ? "NULL" : "NOT NULL, results size: " + (response.getResults() == null ? "results NULL" : response.getResults().size())));
+
             if (response != null && response.getResults() != null) {
                 for (AdzunaJob job : response.getResults()) {
-                    String company = job.getCompany() != null ? job.getCompany().getDisplay_name() : companyName;
-                    items.add(new OpportunityItem(job.getTitle(), job.getRedirect_url(), company));
+                    String company = job.getCompany() != null ? job.getCompany().getDisplay_name() : "";
+                    String title = job.getTitle() != null ? job.getTitle() : "";
+
+                    // Sirf wahi results rakho jisme selected company ka naam title ya company field mein ho
+                    boolean matchesCompany = company.toLowerCase().contains(companyName.toLowerCase())
+                            || title.toLowerCase().contains(companyName.toLowerCase());
+
+                    if (matchesCompany) {
+                        items.add(new OpportunityItem(job.getTitle(), job.getRedirect_url(), company));
+                    }
                 }
             }
         } catch (Exception e) {
